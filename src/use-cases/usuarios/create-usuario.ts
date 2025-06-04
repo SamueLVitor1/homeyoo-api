@@ -1,7 +1,7 @@
 import { CriarUsuarioDTO, UsuariosRepositoryInterface } from "../../repositories/usuario-repository-interface";
 import { hash } from "bcryptjs"; // ou outro lib de hash que preferir
 import { Usuario } from "../../models/usuario.model"; // ajuste se necessário
-import { ErroUsuarioJaExiste } from "../errors/erro-usuario-ja-existe";
+import { ErroUsuarioJaExiste } from "../@errors/erro-usuario-ja-existe";
 
 interface CreateUsuarioUseCaseRequest extends Omit<CriarUsuarioDTO, 'senha_hash'> {
   senha: string;

@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { MongoUsuariosRepository } from "../../../repositories/mongo/mongo-usuarios-repository";
 import { CreateUsuarioUseCase } from "../../../use-cases/usuarios/create-usuario";
-import { ErroUsuarioJaExiste } from "../../../use-cases/errors/erro-usuario-ja-existe";
+import { ErroUsuarioJaExiste } from "../../../use-cases/@errors/erro-usuario-ja-existe";
 
 
 export async function createUsuario(request: FastifyRequest, reply: FastifyReply) {
