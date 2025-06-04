@@ -10,7 +10,7 @@ export class MongoCasaRepository implements CasasRepositoryInterface {
   buscarPorId(id: string): Promise<Casa | null> {
     return CasaModel.findById(id).lean();
   }
-  buscarPorCodigo(codigo: string): Promise<Casa | null> {
+  async buscarPorCodigo(codigo: string) {
     return CasaModel.findOne({ codigo_convite: codigo }).lean();
   }
 
