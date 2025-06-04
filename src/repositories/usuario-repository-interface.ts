@@ -15,4 +15,5 @@ export interface CriarUsuarioDTO {
 
 export interface UsuariosRepositoryInterface {
   create(data: CriarUsuarioDTO): Promise<Usuario>
+  buscarPorEmail(email: string): Promise<Usuario | null>
 }

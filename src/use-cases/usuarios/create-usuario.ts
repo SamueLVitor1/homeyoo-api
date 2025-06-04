@@ -1,13 +1,14 @@
 import { CriarUsuarioDTO, UsuariosRepositoryInterface } from "../../repositories/usuario-repository-interface";
 import { hash } from "bcryptjs"; // ou outro lib de hash que preferir
 import { Usuario } from "../../models/usuario.model"; // ajuste se necessário
+import { ErroUsuarioJaExiste } from "../errors/erro-usuario-ja-existe";
 
 interface CreateUsuarioUseCaseRequest extends Omit<CriarUsuarioDTO, 'senha_hash'> {
   senha: string;
 }
 
 interface CreateUsuarioUseCaseResponse {
-  user: Usuario;
+  usuario: Usuario;
 }
 
 export class CreateUsuarioUseCase {
@@ -18,27 +19,25 @@ export class CreateUsuarioUseCase {
   async execute(request: CreateUsuarioUseCaseRequest): Promise<CreateUsuarioUseCaseResponse> {
     const { nome, email, senha, avatar, casas } = request;
 
-    // aqui você pode verificar se o e-mail já existe (recomendo fazer isso no repository depois)
-    // Exemplo:
-    // const userExists = await this.usuarioRepository.findByEmail(email);
-    // if (userExists) throw new Error("Usuário já existe");
+    const usuarioEmailExists = await this.usuarioRepository.buscarPorEmail(email);
+
+    if (usuarioEmailExists) {
+      throw new ErroUsuarioJaExiste();
+    }
+
 
     const senha_hash = await hash(senha, 6);
 
-    const userData: CriarUsuarioDTO = {
+    const usuario = await this.usuarioRepository.create({
       nome,
       email,
       senha_hash,
       avatar,
       casas
-    };
-
-    await this.usuarioRepository.create(userData);
+    });
 
     return {
-      user: {
-        ...userData,
-      } as Usuario
-    };
+      usuario
+    }
   }
 }

@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { MongoUsuariosRepository } from "../../../repositories/mongo/mongo-usuarios-repository";
 import { CreateUsuarioUseCase } from "../../../use-cases/usuarios/create-usuario";
+import { ErroUsuarioJaExiste } from "../../../use-cases/errors/erro-usuario-ja-existe";
 
 
 export async function createUsuario(request: FastifyRequest, reply: FastifyReply) {
@@ -30,7 +31,11 @@ export async function createUsuario(request: FastifyRequest, reply: FastifyReply
       message: 'Usuário criado com sucesso!'
     })
   } catch (error) {
-    return reply.status(500).send(error)
+    if (error instanceof ErroUsuarioJaExiste) {
+      return reply.status(409).send({ message: error.message });
+    }
+
+    return reply.status(500).send({ message: 'Erro interno do servidor', error });
   }
 
 }
