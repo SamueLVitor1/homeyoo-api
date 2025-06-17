@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { createUsuario } from "./create";
+import { criarUsuarioController } from "./criar";
 
-export async function usuariosRoutes(app: FastifyInstance){
-  app.post('/usuarios', createUsuario)
+export async function usuariosRoutes(app: FastifyInstance) {
+  app.post('/usuarios', criarUsuarioController)
 }
