@@ -12,4 +12,5 @@ export interface CasaRepositoryInterface {
   criar(data: CriarCasaDTO & { membroAdmin: any }): Promise<CasaType>
   buscarPorCodigo(codigo: string): Promise<CasaType | null>
   adicionarMembro(casaId: string, membro: MembroInterface): Promise<void>
+  buscarPorId(id: string): Promise<CasaType | null>
 }

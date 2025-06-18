@@ -28,4 +28,8 @@ export class MongoCasaRepository implements CasaRepositoryInterface {
     )
   }
 
+  async buscarPorId(id: string) {
+    return Casa.findById(id)
+  }
+
 }
