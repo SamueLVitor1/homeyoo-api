@@ -11,4 +11,21 @@ export class MongoCasaRepository implements CasaRepositoryInterface {
     })
     return novaCasa
   }
+
+  async buscarPorCodigo(codigo: string) {
+    return Casa.findOne({ codigo })
+  }
+
+  async adicionarMembro(casaId: string, membro: {
+    user_id: string
+    nome: string
+    avatar: string
+    papel: 'membro'
+  }) {
+    await Casa.updateOne(
+      { _id: casaId },
+      { $push: { membros: membro } }
+    )
+  }
+
 }
