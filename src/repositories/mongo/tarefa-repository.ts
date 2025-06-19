@@ -7,4 +7,10 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
     const tarefa = await Tarefa.create(data)
     return tarefa
   }
+
+  async listarPorCasa(house_id: string) {
+    return Tarefa.find({ house_id })
+      .populate('tarefa_id', 'nome') // pega nome da tarefa
+      .populate('responsavel_id', 'nome avatar') // pega nome e avatar do usuário
+  }
 }

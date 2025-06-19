@@ -1,9 +1,9 @@
 import { HydratedDocument, InferSchemaType, Schema, model } from 'mongoose'
 
 const TarefaSchema = new Schema({
-  tarefa_id: { type: String, required: true },
+ tarefa_id: { type: Schema.Types.ObjectId, ref: 'TarefaGlobal', required: true },
   house_id: { type: String, required: true },
-  responsavel_id: { type: String, required: true },
+  responsavel_id: { type: Schema.Types.ObjectId, ref: 'Usuario', required: true },
   pontuacao: { type: Number, required: true },
   status: { type: String, enum: ['pendente', 'concluida'], default: 'pendente' },
   data_criacao: { type: Date, default: Date.now },
