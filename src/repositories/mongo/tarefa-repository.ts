@@ -1,4 +1,4 @@
-import { Tarefa } from '../../models/tarefa'
+import { Tarefa, TarefaType } from '../../models/tarefa'
 import { CriarTarefaDTO } from '../../dto/criar-tarefa'
 import { TarefaRepositoryInterface } from '../interfaces/tarefa-repository-interface'
 
@@ -12,5 +12,18 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
     return Tarefa.find({ house_id })
       .populate('tarefa_id', 'nome') // pega nome da tarefa
       .populate('responsavel_id', 'nome avatar') // pega nome e avatar do usuário
+  }
+
+  async buscarPorId(id: string) {
+    return await Tarefa.findById(id)
+  }
+
+  async atualizar(data: Partial<TarefaType> & { _id: string }) {
+    const { _id, ...resto } = data
+    const tarefaAtualizada = await Tarefa.findByIdAndUpdate(_id, resto, {
+      new: true
+    })
+
+    return tarefaAtualizada as TarefaType
   }
 }
