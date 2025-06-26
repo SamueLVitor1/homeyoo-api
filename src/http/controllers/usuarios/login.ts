@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { MongoUsuariosRepository } from '../../../repositories/mongo/usuarios-repository'
 import { AutenticarUsuarioUseCase } from '../../../use-cases/usuarios/autenticar-usuario'
 import { z } from 'zod'
+import { makeAutenticarUsuarioUseCase } from '../../../use-cases/factories/make-autenticar-usuario'
 
 export async function loginController(req: FastifyRequest, reply: FastifyReply) {
 
@@ -13,8 +14,8 @@ export async function loginController(req: FastifyRequest, reply: FastifyReply) 
   const { email, senha } = bodySchema.parse(req.body)
 
   try {
-    const repo = new MongoUsuariosRepository()
-    const useCase = new AutenticarUsuarioUseCase(repo, req.server)
+    const useCase = makeAutenticarUsuarioUseCase(req.server)
+
 
     const { token, usuario } = await useCase.execute({ email, senha })
 

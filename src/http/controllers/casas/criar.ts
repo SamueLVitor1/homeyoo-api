@@ -1,8 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { MongoCasaRepository } from '../../../repositories/mongo/casa-repository'
 import { MongoUsuariosRepository } from '../../../repositories/mongo/usuarios-repository'
-import { CriarCasaUseCase } from '../../../use-cases/casas/criar-casa'
 import { makeCriarCasaUseCase } from '../../../use-cases/factories/make-criar-casa'
 
 export async function criarCasaController(request: FastifyRequest, reply: FastifyReply) {
