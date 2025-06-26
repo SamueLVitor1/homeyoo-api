@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { MongoCasaRepository } from '../../../repositories/mongo/casa-repository'
 import { z } from 'zod'
-import { BuscarCasaIdUseCase } from '../../../use-cases/casas/buscar-por-id'
+import { makeBuscarCasaIdUseCase } from '../../../use-cases/factories/make-buscar-por-id'
 
 export async function buscarCasaIdController(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -10,11 +9,7 @@ export async function buscarCasaIdController(request: FastifyRequest, reply: Fas
 
   const { id } = paramsSchema.parse(request.params)
 
-  const casaRepo = new MongoCasaRepository()
-
-  const useCase = new BuscarCasaIdUseCase(
-    casaRepo
-  )
+  const useCase = makeBuscarCasaIdUseCase()
 
   const casa = await useCase.execute({
     casaId: id,
