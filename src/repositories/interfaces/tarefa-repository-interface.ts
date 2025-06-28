@@ -6,4 +6,5 @@ export interface TarefaRepositoryInterface {
   listarPorCasa(house_id: string): Promise<TarefaType[]>
   buscarPorId(id: string): Promise<TarefaType | null>
   atualizar(data: Partial<TarefaType> & { _id: string }): Promise<TarefaType>
+  buscarPorUsuarioEStatus(usuarioId: string, status: string): Promise<TarefaType[]>
 }

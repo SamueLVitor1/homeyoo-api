@@ -1,6 +1,4 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { MongoUsuariosRepository } from '../../../repositories/mongo/usuarios-repository'
-import { CriarUsuarioUseCase } from '../../../use-cases/usuarios/criar-usuario'
 import { z } from 'zod'
 import { makeCriarUsuarioUseCase } from '../../../use-cases/factories/make-criar-usuario'
 
@@ -15,7 +13,7 @@ export async function criarUsuarioController(req: FastifyRequest, reply: Fastify
   })
 
   const { nome, email, senha, avatar } = bodySchema.parse(req.body)
-
+  console.log(req.body)
   try {
     const useCase = makeCriarUsuarioUseCase()
 

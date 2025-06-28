@@ -4,6 +4,7 @@ import { criarTarefaController } from "./criar"
 import { listarTarefasGlobaisController } from "./listar-globais"
 import { listarTarefasController } from "./listar"
 import { concluirTarefaController } from "./concluir"
+import { buscarTarefasPendentesController } from "./buscar-pendentes"
 
 
 export async function tarefasRoutes(app: FastifyInstance) {
@@ -13,4 +14,5 @@ export async function tarefasRoutes(app: FastifyInstance) {
   app.get('/tarefas/tipos', listarTarefasGlobaisController)
   app.get('/tarefas/:id', listarTarefasController)
   app.patch('/tarefas/concluir', concluirTarefaController)
+  app.get('/tarefas/pendentes', buscarTarefasPendentesController)
 }

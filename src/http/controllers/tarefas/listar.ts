@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { MongoTarefaRepository } from '../../../repositories/mongo/tarefa-repository'
-import { ListarTarefasPorCasaUseCase } from '../../../use-cases/tarefas/listar-por-casa'
+import { makeListarTarefasPorCasaUseCase } from '../../../use-cases/factories/make-listar-por-casa'
 
 export async function listarTarefasController(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -9,9 +8,8 @@ export async function listarTarefasController(request: FastifyRequest, reply: Fa
   })
 
   const { id } = paramsSchema.parse(request.params)
-
-  const repo = new MongoTarefaRepository()
-  const useCase = new ListarTarefasPorCasaUseCase(repo)
+ 
+  const useCase = makeListarTarefasPorCasaUseCase()
 
   const { tarefas } = await useCase.execute({ house_id: id })
 

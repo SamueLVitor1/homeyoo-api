@@ -26,4 +26,8 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
 
     return tarefaAtualizada as TarefaType
   }
+
+  async buscarPorUsuarioEStatus(usuarioId: string, status: string): Promise<TarefaType[]> {
+    return await Tarefa.find({ usuarioId, status })
+  }
 }
