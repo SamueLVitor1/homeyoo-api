@@ -24,4 +24,8 @@ export class MongoPontuacaoRepository implements PontuacaoRepositoryInterface {
     )
   }
 
+  async buscarPontuacaoAtual(usuarioId: string): Promise<number> {
+    const registro = await Pontuacao.findOne({ user_id: usuarioId })
+    return registro?.pontos ?? 0
+  }
 }
