@@ -15,6 +15,7 @@ export async function criarCasaController(request: FastifyRequest, reply: Fastif
   const usuariosRepo = new MongoUsuariosRepository()
   const usuario = await usuariosRepo.buscarPorId(request.user.sub)
 
+  
   if (!usuario) {
     return reply.status(404).send({ error: 'Usuário não encontrado' })
   }

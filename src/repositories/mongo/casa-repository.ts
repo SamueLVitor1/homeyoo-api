@@ -1,6 +1,6 @@
 import { Casa } from '../../models/casa'
 import { CriarCasaDTO } from '../../dto/criar-casa'
-import { CasaRepositoryInterface } from '../interfaces/casa-repository-interface'
+import { CasaRepositoryInterface, MembroCasa } from '../interfaces/casa-repository-interface'
 
 export class MongoCasaRepository implements CasaRepositoryInterface {
   async criar(data: CriarCasaDTO & { membroAdmin: any }) {
@@ -32,4 +32,18 @@ export class MongoCasaRepository implements CasaRepositoryInterface {
     return Casa.findById(id)
   }
 
+  async buscarMembros(houseId: string) {
+    const casa = await Casa.findById(houseId).select('membros')
+
+    if (!casa) {
+      throw new Error('Casa não encontrada')
+    }
+
+    return casa.membros.map(membro => ({
+      user_id: membro.user_id.toString(),
+      nome: membro.nome,
+      papel: membro.papel,
+      avatar: membro.avatar ?? ''
+    }))
+  }
 }
