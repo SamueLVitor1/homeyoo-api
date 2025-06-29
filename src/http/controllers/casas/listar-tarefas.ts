@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { makeListarTarefasPorCasaUseCase } from '../../../use-cases/factories/make-listar-por-casa'
 
-export async function listarTarefasController(request: FastifyRequest, reply: FastifyReply) {
+export async function listarTarefasPorCasaController(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
     id: z.string().min(1)
   })

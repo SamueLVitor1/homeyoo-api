@@ -4,6 +4,7 @@ import { verifyJWT } from '../../middlewares/verify-jwt'
 import { entrarNaCasaController } from './entrar'
 import { buscarCasaIdController } from './buscar-id'
 import { listarMembrosCasaController } from './listar-membros'
+import { listarTarefasPorCasaController } from './listar-tarefas'
 
 
 export async function casasRoutes(app: FastifyInstance) {
@@ -13,4 +14,5 @@ export async function casasRoutes(app: FastifyInstance) {
   app.patch('/casas/entrar/:codigo', entrarNaCasaController)
   app.get('/casas/:id', buscarCasaIdController)
   app.get('/casas/:id/membros', listarMembrosCasaController)
+  app.get('/casas/:id/tarefas', listarTarefasPorCasaController)
 }
