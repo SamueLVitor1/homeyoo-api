@@ -1,14 +1,14 @@
-import { TarefaRepositoryInterface } from "../../repositories/interfaces/tarefa-repository-interface"
+import { TarefaRepositoryInterface } from '../../repositories/interfaces/tarefa-repository-interface'
+import { TarefaType } from '../../models/tarefa'
 
-interface BuscarTarefasPendentesUseCaseRequest {
-  usuarioId: string
+interface BuscarTarefasPendentesRequest {
+  userId: string
 }
 
 export class BuscarTarefasPendentesUseCase {
-  constructor(private tarefasRepository: TarefaRepositoryInterface) { }
+  constructor(private tarefaRepository: TarefaRepositoryInterface) { }
 
-  async execute({ usuarioId }: BuscarTarefasPendentesUseCaseRequest): Promise<number> {
-    const tarefasPendentes = await this.tarefasRepository.buscarPorUsuarioEStatus(usuarioId, 'pendente')
-    return tarefasPendentes.length
+  async execute({ userId }: BuscarTarefasPendentesRequest): Promise<TarefaType[]> {
+    return this.tarefaRepository.buscarPendentesPorUsuario(userId)
   }
 }

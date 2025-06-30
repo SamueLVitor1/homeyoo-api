@@ -1,13 +1,13 @@
 import { TarefaRepositoryInterface } from "../../repositories/interfaces/tarefa-repository-interface"
 
-interface BuscarTarefasConcluidasUseCaseRequest {
+interface ContarTarefasConcluidasUseCaseRequest {
   usuarioId: string
 }
 
-export class BuscarTarefasConcluidasUseCase {
+export class ContarTarefasConcluidasUseCase {
   constructor(private tarefasRepository: TarefaRepositoryInterface) { }
 
-  async execute({ usuarioId }: BuscarTarefasConcluidasUseCaseRequest): Promise<number> {
+  async execute({ usuarioId }: ContarTarefasConcluidasUseCaseRequest): Promise<number> {
     const tarefasConcluidas = await this.tarefasRepository.buscarPorUsuarioEStatus(usuarioId, 'concluida')
 
     console.log(tarefasConcluidas)

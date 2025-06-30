@@ -7,4 +7,5 @@ export interface TarefaRepositoryInterface {
   buscarPorId(id: string): Promise<TarefaType | null>
   atualizar(data: Partial<TarefaType> & { _id: string }): Promise<TarefaType>
   buscarPorUsuarioEStatus(usuarioId: string, status: string): Promise<TarefaType[]>
+  buscarPendentesPorUsuario(userId: string): Promise<TarefaType[]>
 }

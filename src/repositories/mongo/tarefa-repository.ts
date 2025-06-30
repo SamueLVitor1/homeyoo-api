@@ -30,4 +30,11 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
   async buscarPorUsuarioEStatus(usuarioId: string, status: string): Promise<TarefaType[]> {
     return await Tarefa.find({ responsavel_id: usuarioId, status })
   }
+
+  async buscarPendentesPorUsuario(userId: string, limit = 3): Promise<TarefaType[]> {
+    return Tarefa.find({
+      responsavel_id: userId,
+      status: 'pendente'
+    }).sort({ data_limite: 1 }).limit(limit)
+  }
 }
