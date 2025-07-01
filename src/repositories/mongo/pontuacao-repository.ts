@@ -28,4 +28,17 @@ export class MongoPontuacaoRepository implements PontuacaoRepositoryInterface {
     const registro = await Pontuacao.findOne({ user_id: usuarioId })
     return registro?.pontos ?? 0
   }
+
+  async buscarRankingPorCasa(houseId: string) {
+    const ranking = await Pontuacao.find({ house_id: houseId })
+      .select('user_id pontos -_id') // seleciona apenas user_id e pontos, omite o _id
+      .sort({ pontos: -1 }) // ordena por pontuação decrescente
+      .lean()
+
+    return ranking.map(item => ({
+      user_id: item.user_id,
+      pontos: item.pontos,
+    }))
+  }
+
 }

@@ -35,6 +35,6 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
     return Tarefa.find({
       responsavel_id: userId,
       status: 'pendente'
-    }).sort({ data_limite: 1 }).limit(limit)
+    }).populate('tarefa_id').sort({ data_limite: 1 }).limit(limit)
   }
 }
