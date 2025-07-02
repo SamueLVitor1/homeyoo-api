@@ -8,10 +8,13 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
     return tarefa
   }
 
-  async listarPorCasa(house_id: string) {
-    return Tarefa.find({ house_id })
-      .populate('tarefa_id', 'nome') // pega nome da tarefa
-      .populate('responsavel_id', 'nome avatar') // pega nome e avatar do usuário
+  async listarPorCasa(house_id: string, status?: string) {
+    const filter: any = { house_id }
+    if (status) filter.status = status
+
+    return Tarefa.find(filter)
+      .populate('tarefa_id', 'nome')
+      .populate('responsavel_id', 'nome avatar')
   }
 
   async buscarPorId(id: string) {

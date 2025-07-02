@@ -7,11 +7,21 @@ export async function listarTarefasPorCasaController(request: FastifyRequest, re
     id: z.string().min(1)
   })
 
+
+  const querySchema = z.object({
+    status: z.string().optional(),
+  })
+
+  const { status } = querySchema.parse(request.query)
+
   const { id } = paramsSchema.parse(request.params)
- 
+
   const useCase = makeListarTarefasPorCasaUseCase()
 
-  const { tarefas } = await useCase.execute({ house_id: id })
+  const { tarefas } = await useCase.execute({
+    house_id: id,
+    status,
+  })
 
   return reply.status(200).send({ tarefas })
 }
