@@ -13,6 +13,9 @@ const UsuarioSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   senha_hash: { type: String, required: true },
   avatar: { type: String },
+  streakAtual: {type: Number,default: 0, },
+  maiorStreak: {type: Number, default: 0,},
+  ultimoDiaStreak: { type: Date,default: null,},
   casas: { type: [CasaUsuarioSchema], default: [] },
   data_criacao: { type: Date, default: Date.now }
 })

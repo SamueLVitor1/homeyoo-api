@@ -1,3 +1,4 @@
+import { Usuario } from "../../models/usuario"
 import { PontuacaoRepositoryInterface } from "../../repositories/interfaces/pontuacao-repository-interface"
 import { TarefaRepositoryInterface } from "../../repositories/interfaces/tarefa-repository-interface"
 import { Types } from 'mongoose'
@@ -38,6 +39,48 @@ export class ConcluirTarefaUseCase {
     })
 
     await this.pontuacaoRepository.incrementarPontos(user_id, house_id, tarefa.pontuacao)
+
+    // lógica do streak
+    const user = await Usuario.findById(user_id)
+    if (user) {
+      const hoje = new Date()
+      hoje.setHours(0, 0, 0, 0)
+
+      const ultimoDia = user.ultimoDiaStreak ? new Date(user.ultimoDiaStreak) : null
+      if (ultimoDia) ultimoDia.setHours(0, 0, 0, 0)
+
+      let atualizouStreak = false
+
+      let diffDias = 0
+      if (ultimoDia) {
+        diffDias = Math.floor((hoje.getTime() - ultimoDia.getTime()) / (1000 * 60 * 60 * 24))
+      }
+
+      if (!ultimoDia) {
+        // Nunca teve streak antes
+        user.streakAtual = 1
+        user.ultimoDiaStreak = hoje
+        atualizouStreak = true
+      } else if (diffDias === 1) {
+        // Manteve streak (dia seguido)
+        user.streakAtual = (user.streakAtual || 0) + 1
+        user.ultimoDiaStreak = hoje
+        atualizouStreak = true
+      } else if (diffDias > 1) {
+        // Quebrou streak (ficou dias sem concluir)
+        user.streakAtual = 1
+        user.ultimoDiaStreak = hoje
+        atualizouStreak = true
+      }
+      // Se diffDias === 0, não faz nada (já contou streak hoje)
+
+      if (atualizouStreak) {
+        if (!user.maiorStreak || user.streakAtual > user.maiorStreak) {
+          user.maiorStreak = user.streakAtual
+        }
+        await user.save()
+      }
+    }
 
     return tarefaAtualizada
   }
