@@ -21,4 +21,6 @@ export interface CasaRepositoryInterface {
   adicionarMembro(casaId: string, membro: MembroInterface): Promise<void>
   buscarPorId(id: string): Promise<CasaType | null>
   buscarMembros(idCasa: string): Promise<MembroCasa[] | null>
+  atualizarCasa(casaId: string, data: Partial<{ nome: string; metaAtual: number }>): Promise<void>
+
 }

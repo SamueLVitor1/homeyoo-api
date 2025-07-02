@@ -6,6 +6,7 @@ import { buscarCasaIdController } from './buscar-id'
 import { listarMembrosCasaController } from './listar-membros'
 import { listarTarefasPorCasaController } from './listar-tarefas'
 import { buscarRankingController } from './buscar-ranking'
+import { atualizarCasaController } from './atualizar'
 
 
 export async function casasRoutes(app: FastifyInstance) {
@@ -17,4 +18,5 @@ export async function casasRoutes(app: FastifyInstance) {
   app.get('/casas/:id/membros', listarMembrosCasaController)
   app.get('/casas/:id/tarefas', listarTarefasPorCasaController)
   app.get('/casas/:id/ranking', buscarRankingController)
+  app.patch('/casas/:id', atualizarCasaController)
 }
