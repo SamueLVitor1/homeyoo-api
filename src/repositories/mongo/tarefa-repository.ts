@@ -40,4 +40,9 @@ export class MongoTarefaRepository implements TarefaRepositoryInterface {
       status: 'pendente'
     }).populate('tarefa_id').sort({ data_limite: 1 }).limit(limit)
   }
+
+  async deletarPorCasaEUsuarioResponsavel(casaId: string, userId: string) {
+    await Tarefa.deleteMany({ house_id: casaId, responsavel_id: userId })
+  }
+
 }

@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto'
-import { CriarCasaDTO } from '../../dto/criar-casa'
 import { CasaType } from '../../models/casa'
 import { CasaRepositoryInterface } from '../../repositories/interfaces/casa-repository-interface'
 import { UsuariosRepositoryInterface } from '../../repositories/interfaces/usuario-repository-interface'

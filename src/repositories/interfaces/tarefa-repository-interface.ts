@@ -8,4 +8,5 @@ export interface TarefaRepositoryInterface {
   atualizar(data: Partial<TarefaType> & { _id: string }): Promise<TarefaType>
   buscarPorUsuarioEStatus(usuarioId: string, status: string): Promise<TarefaType[]>
   buscarPendentesPorUsuario(userId: string): Promise<TarefaType[]>
+  deletarPorCasaEUsuarioResponsavel(casaId: string, userId: string): Promise<void>
 }

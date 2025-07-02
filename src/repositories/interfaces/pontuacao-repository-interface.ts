@@ -9,4 +9,6 @@ export interface PontuacaoRepositoryInterface {
     user_id: string
     pontos: number
   }>>
+  apagarPontuacaoUsuarioNaCasa(userId: string, casaId: string): Promise<void>
+
 }

@@ -22,5 +22,5 @@ export interface CasaRepositoryInterface {
   buscarPorId(id: string): Promise<CasaType | null>
   buscarMembros(idCasa: string): Promise<MembroCasa[] | null>
   atualizarCasa(casaId: string, data: Partial<{ nome: string; metaAtual: number }>): Promise<void>
-
+  removerMembro(casaId: string, userId: string): Promise<void>
 }

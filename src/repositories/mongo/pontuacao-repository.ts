@@ -40,5 +40,9 @@ export class MongoPontuacaoRepository implements PontuacaoRepositoryInterface {
       pontos: item.pontos,
     }))
   }
+  
+  async apagarPontuacaoUsuarioNaCasa(userId: string, casaId: string) {
+    await Pontuacao.deleteOne({ user_id: userId, house_id: casaId })
+  }
 
 }

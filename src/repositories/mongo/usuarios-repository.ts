@@ -21,4 +21,10 @@ export class MongoUsuariosRepository implements UsuariosRepositoryInterface {
   async buscarPorId(id: string) {
     return Usuario.findById(id)
   }
+
+  async removerCasaDoUsuario(userId: string, casaId: string) {
+    await Usuario.findByIdAndUpdate(userId, {
+      $pull: { casas: { house_id: casaId } }
+    })
+  }
 }

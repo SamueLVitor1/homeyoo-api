@@ -46,8 +46,14 @@ export class MongoCasaRepository implements CasaRepositoryInterface {
       avatar: membro.avatar ?? ''
     }))
   }
-  
+
   async atualizarCasa(casaId: string, data: Partial<{ nome: string; metaAtual: number }>) {
     await Casa.findByIdAndUpdate(casaId, data)
+  }
+
+  async removerMembro(casaId: string, userId: string) {
+    await Casa.findByIdAndUpdate(casaId, {
+      $pull: { membros: { user_id: userId } }
+    })
   }
 }

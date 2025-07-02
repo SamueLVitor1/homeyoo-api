@@ -7,6 +7,7 @@ import { listarMembrosCasaController } from './listar-membros'
 import { listarTarefasPorCasaController } from './listar-tarefas'
 import { buscarRankingController } from './buscar-ranking'
 import { atualizarCasaController } from './atualizar'
+import { removerMembroCasaController } from './remover-membro-casa'
 
 
 export async function casasRoutes(app: FastifyInstance) {
@@ -19,4 +20,5 @@ export async function casasRoutes(app: FastifyInstance) {
   app.get('/casas/:id/tarefas', listarTarefasPorCasaController)
   app.get('/casas/:id/ranking', buscarRankingController)
   app.patch('/casas/:id', atualizarCasaController)
+  app.delete('/casas/:id/membros/:userId', removerMembroCasaController)
 }

@@ -6,4 +6,6 @@ export interface UsuariosRepositoryInterface {
   buscarPorEmail(email: string): Promise<UsuarioType | null>
   adicionarCasa(userId: string, dados: { house_id: string, papel: string }): Promise<void>
   buscarPorId(id: string): Promise<UsuarioType | null>
+  removerCasaDoUsuario(userId: string, casaId: string): Promise<void>
+
 }
