@@ -29,7 +29,8 @@ export class CriarUsuarioUseCase {
       nome,
       email,
       senha_hash,
-      avatar: avatar ?? ''
+      avatar: avatar ?? '',
+      medalhas: medalhasIniciais
     })
 
     return {
@@ -37,3 +38,42 @@ export class CriarUsuarioUseCase {
     }
   }
 }
+
+const medalhasIniciais = [
+  {
+    nome: "bronze",
+    displayName: "Patente Bronze",
+    iconeUrl: "https://res.cloudinary.com/dzlxbwggb/image/upload/v1751559563/bronze-medalha-removebg-preview_spkbfi.png",
+    pontosNecessarios: 5,
+    pontosUsuario: 0,
+    habilitado: false,
+    dataConquista: null
+  },
+  {
+    nome: "prata",
+    displayName: "Patente Prata",
+    iconeUrl: "https://res.cloudinary.com/dzlxbwggb/image/upload/v1751559563/prata-medalha-removebg-preview_1_pa66su.png",
+    pontosNecessarios: 15,
+    pontosUsuario: 0,
+    habilitado: false,
+    dataConquista: null
+  },
+  {
+    nome: "ouro",
+    displayName: "Patente Ouro",
+    iconeUrl: "https://res.cloudinary.com/dzlxbwggb/image/upload/v1751559563/ouro-medalha-removebg-preview_w2nyd0.png",
+    pontosNecessarios: 30,
+    pontosUsuario: 0,
+    habilitado: false,
+    dataConquista: null
+  },
+  {
+    nome: "diamante",
+    displayName: "Patente Diamante",
+    iconeUrl: "https://res.cloudinary.com/dzlxbwggb/image/upload/v1751559563/diamante-medalha-removebg-preview_t7baz5.png",
+    pontosNecessarios: 50,
+    pontosUsuario: 0,
+    habilitado: false,
+    dataConquista: null
+  }
+]

@@ -40,9 +40,12 @@ export class ConcluirTarefaUseCase {
 
     await this.pontuacaoRepository.incrementarPontos(user_id, house_id, tarefa.pontuacao)
 
-    // lógica do streak
+    // lógica de streak + medalhas
     const user = await Usuario.findById(user_id)
     if (user) {
+      let mudouAlgo = false
+
+      // --- Lógica de streak ---
       const hoje = new Date()
       hoje.setHours(0, 0, 0, 0)
 
@@ -50,34 +53,40 @@ export class ConcluirTarefaUseCase {
       if (ultimoDia) ultimoDia.setHours(0, 0, 0, 0)
 
       let atualizouStreak = false
-
       let diffDias = 0
       if (ultimoDia) {
         diffDias = Math.floor((hoje.getTime() - ultimoDia.getTime()) / (1000 * 60 * 60 * 24))
       }
 
       if (!ultimoDia) {
-        // Nunca teve streak antes
         user.streakAtual = 1
         user.ultimoDiaStreak = hoje
         atualizouStreak = true
       } else if (diffDias === 1) {
-        // Manteve streak (dia seguido)
         user.streakAtual = (user.streakAtual || 0) + 1
         user.ultimoDiaStreak = hoje
         atualizouStreak = true
       } else if (diffDias > 1) {
-        // Quebrou streak (ficou dias sem concluir)
         user.streakAtual = 1
         user.ultimoDiaStreak = hoje
         atualizouStreak = true
       }
-      // Se diffDias === 0, não faz nada (já contou streak hoje)
+      // Se diffDias === 0, não faz nada
 
       if (atualizouStreak) {
         if (!user.maiorStreak || user.streakAtual > user.maiorStreak) {
           user.maiorStreak = user.streakAtual
         }
+        mudouAlgo = true
+      }
+
+      // --- Lógica de medalhas ---
+      const mudouMedalha = atualizarMedalhas(user)
+      if (mudouMedalha) {
+        mudouAlgo = true
+      }
+
+      if (mudouAlgo) {
         await user.save()
       }
     }
@@ -86,3 +95,25 @@ export class ConcluirTarefaUseCase {
   }
 }
 
+function atualizarMedalhas(user: any) {
+  if (!user.medalhas) return false
+
+  let mudouAlgo = false
+
+  user.medalhas.forEach((medalha: any) => {
+    // Se ainda não está habilitada, verifica progresso
+    if (!medalha.habilitado) {
+      // Incrementa pontos
+      medalha.pontosUsuario = (medalha.pontosUsuario || 0) + 1
+
+      // Se atingiu meta, habilita e salva data
+      if (medalha.pontosUsuario >= medalha.pontosNecessarios) {
+        medalha.habilitado = true
+        medalha.dataConquista = new Date()
+      }
+      mudouAlgo = true
+    }
+  })
+
+  return mudouAlgo
+}
